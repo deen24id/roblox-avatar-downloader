@@ -42,21 +42,21 @@ async function main() {
     console.log(data2);
 
     if (!existsSync(`out/${id}/`)) {
-      mkdirSync(`out/${id}/`, { recursive: true });
+      mkdirSync(`out/${id}/obj/`, { recursive: true });
     }
 
     await Promise.all([
       await writeFile(
-        `out/${id}/avatar.obj`,
+        `out/${id}/obj/avatar.obj`,
         await (await fetch(getCdn(data2.obj))).text()
       ),
       await writeFile(
-        `out/${id}/avatar.mtl`,
+        `out/${id}/obj/avatar.mtl`,
         await (await fetch(getCdn(data2.mtl))).text()
       ),
       data2.textures.map(async (val) => {
         await writeFile(
-          `out/${id}/${val}.png`,
+          `out/${id}/obj/${val}.png`,
           Buffer.from(await (await fetch(getCdn(val))).arrayBuffer())
         );
       }),
